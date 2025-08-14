@@ -18,7 +18,6 @@ export class VirusTotalService {
       .pipe(
         switchMap(res => {
           const analysisId = res.data.id;
-          console.log(`Scan initiated with ID: ${analysisId}`)
           return this.fetchScanAnalysisById(analysisId);
         }),
         catchError(err => throwError(() => err))
