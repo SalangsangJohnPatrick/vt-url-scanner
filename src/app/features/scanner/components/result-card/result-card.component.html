@@ -1,0 +1,61 @@
+<div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+  <!-- Header -->
+  <div class="mb-6 pb-4 border-b border-white/20">
+    <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+      <i class="fas fa-chart-line text-green-400"></i>
+      Scan Analysis
+    </h2>
+    <p class="text-slate-300 break-all">{{ result.meta.url_info.url }}</p>
+    <p class="text-slate-400 flex items-center gap-2 mt-2">
+      <i class="fas fa-calendar-alt"></i>
+      {{ formatDate(result.data.attributes.date) }}
+    </p>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
+    <div class="bg-green-500/20 border border-green-500/30 rounded-xl p-4 text-center">
+      <div class="text-2xl font-bold text-green-400 mb-1">{{ result.data.attributes.stats.harmless }}</div>
+      <div class="text-sm text-green-300 flex items-center justify-center gap-1">
+        <i class="fas fa-check-circle"></i>
+        Clean
+      </div>
+    </div>
+
+    <div class="bg-slate-500/20 border border-slate-500/30 rounded-xl p-4 text-center">
+      <div class="text-2xl font-bold text-slate-400 mb-1">{{ result.data.attributes.stats.undetected }}</div>
+      <div class="text-sm text-slate-300 flex items-center justify-center gap-1">
+        <i class="fas fa-question-circle"></i>
+        Unrated
+      </div>
+    </div>
+
+    <div class="bg-yellow-500/20 border border-yellow-500/30 rounded-xl p-4 text-center">
+      <div class="text-2xl font-bold text-yellow-400 mb-1">{{ result.data.attributes.stats.suspicious }}</div>
+      <div class="text-sm text-yellow-300 flex items-center justify-center gap-1">
+        <i class="fas fa-exclamation-triangle"></i>
+        Suspicious
+      </div>
+    </div>
+
+    <div class="bg-red-500/20 border border-red-500/30 rounded-xl p-4 text-center">
+      <div class="text-2xl font-bold text-red-400 mb-1">{{ result.data.attributes.stats.malicious }}</div>
+      <div class="text-sm text-red-300 flex items-center justify-center gap-1">
+        <i class="fas fa-times-circle"></i>
+        Malicious
+      </div>
+    </div>
+
+    <div class="bg-blue-500/20 border border-blue-500/30 rounded-xl p-4 text-center sm:col-span-3 lg:col-span-1">
+      <div class="text-2xl font-bold text-blue-400 mb-1">{{ totalEngines }}</div>
+      <div class="text-sm text-blue-300 flex items-center justify-center gap-1">
+        <i class="fas fa-database"></i>
+        Total
+      </div>
+    </div>
+  </div>
+
+  <!-- Engine Details -->
+  <app-engine-details [engines]="result.data.attributes.results"></app-engine-details>
+</div>
+

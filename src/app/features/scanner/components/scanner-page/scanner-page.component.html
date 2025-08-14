@@ -1,0 +1,55 @@
+<div class="max-w-4xl mx-auto">
+  <!-- Header -->
+  <div class="text-center mb-8">
+    <h1 class="text-4xl font-bold text-white mb-2 flex items-center justify-center gap-3">
+      <i class="fas fa-shield-virus text-purple-500"></i>
+      VirusTotal URL Scanner
+    </h1>
+    <p class="text-slate-300">Analyze URLs for potential security threats</p>
+  </div>
+
+  <!-- Input Section -->
+  <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/20">
+    <div class="flex flex-col sm:flex-row gap-4">
+      <div class="flex-1 relative">
+        <i class="fas fa-link absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+        <input 
+          [(ngModel)]="url" 
+          type="text" 
+          placeholder="Enter URL to scan" 
+          [class.border-red-500]="error"
+          class="w-full pl-10 pr-4 py-3 bg-white/90 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-slate-800 placeholder-slate-500 transition-all duration-200"
+        />
+      </div>
+      <button 
+        (click)="onScan()" 
+        [disabled]="loading"
+        [class.opacity-50]="loading"
+        [class.cursor-not-allowed]="loading"
+        class="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-200 flex items-center gap-2 min-w-fit disabled:hover:from-purple-600 disabled:hover:to-blue-600"
+      >
+        <i class="fas" [class.fa-search]="!loading" [class.fa-spinner]="loading" [class.fa-spin]="loading"></i>
+        {{ loading ? 'Scanning...' : 'Scan URL' }}
+      </button>
+    </div>
+
+    <p *ngIf="error" class="mt-3 text-red-400 flex items-center gap-2">
+      <i class="fas fa-exclamation-triangle"></i>
+      {{ error }}
+    </p>
+  </div>
+
+  <!-- Result Loading Skeleton -->
+  <div *ngIf="loading" class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 animate-pulse">
+    <div class="h-6 bg-slate-300/30 rounded w-1/3 mb-4"></div>
+    <div class="h-4 bg-slate-300/20 rounded w-1/2 mb-2"></div>
+    <div class="h-4 bg-slate-300/20 rounded w-2/3 mb-2"></div>
+    <div class="h-4 bg-slate-300/20 rounded w-1/4"></div>
+  </div>
+
+  <!-- Results -->
+  <div *ngIf="!loading" class="mb-8">
+    <app-result-card *ngIf="scanResult$ | async as result" [result]="result"></app-result-card>
+  </div>
+</div>
+
