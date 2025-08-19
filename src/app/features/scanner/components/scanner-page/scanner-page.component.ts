@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { VirusTotalService } from '../../../../core/services/virus-total.service';
 import { Observable } from 'rxjs';
 import { ScanResult } from '../../../../core/models/scan-result.model';
@@ -8,7 +8,7 @@ import { ScanResult } from '../../../../core/models/scan-result.model';
   templateUrl: './scanner-page.component.html',
   styleUrls: ['./scanner-page.component.css']
 })
-export class ScannerPageComponent implements OnInit, OnDestroy {
+export class ScannerPageComponent implements OnInit {
   url = '';
   loading = false;
   error: string | null = null;
@@ -28,6 +28,8 @@ export class ScannerPageComponent implements OnInit, OnDestroy {
 
   onScan() {
     this.error = null;
+    this.vtService.clearScanResult();
+
     if (!this.validateUrl(this.url)) {
       this.error = 'Please enter a valid URL starting with http:// or https://';
       return;
@@ -49,9 +51,5 @@ export class ScannerPageComponent implements OnInit, OnDestroy {
         }
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    this.vtService.scanResult$.subscribe().unsubscribe();
   }
 }

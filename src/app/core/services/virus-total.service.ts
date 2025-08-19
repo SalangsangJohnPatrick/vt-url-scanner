@@ -24,6 +24,10 @@ export class VirusTotalService {
       );
   }
 
+  clearScanResult(): void {
+    this.scanResultSubject.next(null);
+  }
+
   private fetchScanAnalysisById(analysisId: string): Observable<ScanResult> {
     return this.http.get<ScanResult>(`${this.BASE_URL}/url-analysis/${analysisId}`)
       .pipe(
